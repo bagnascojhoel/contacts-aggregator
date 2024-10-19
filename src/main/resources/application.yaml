@@ -1,3 +1,9 @@
 spring:
   application:
     name: contacts-aggregator
+
+rest-integrations:
+  kenect-labs-api:
+    base-url: https://k-messages-api.herokuapp.com
+    token: J7ybt6jv6pdJ4gyQP9gNonsY
+    # JODO: Do not commit this secrets

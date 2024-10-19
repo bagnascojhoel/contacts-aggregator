@@ -17,7 +17,7 @@ public final class ContactFixtures {
             .build();
 
     public static Contact KENECT_LABS_ROBERT = Contact.builder()
-            .id(1)
+            .id(4)
             .name("Robert Kusckesat")
             .email("robert@domain.com")
             .contactSource(ContactSource.KENECT_LABS)
