@@ -2,6 +2,12 @@ spring:
   application:
     name: contacts-aggregator
 
+springdoc:
+  swagger-ui:
+    path: /docs
+  default-produces-media-type: application/json
+  default-consumes-media-type: application/json
+
 rest-integrations:
   kenect-labs-api:
     base-url: https://k-messages-api.herokuapp.com
