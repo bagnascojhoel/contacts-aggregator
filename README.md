@@ -43,10 +43,10 @@ docker image build . -t contacts-aggregator
 ```
 
 ```shell
-docker container run 
-    --network="host" 
-    -e KENECT_LABS_API_BASE_URL=<kenect labs URL>
-    -e KENECT_LABS_API_TOKEN=<kenect labs token>
+docker container run \
+    --network="host" \
+    -e KENECT_LABS_API_BASE_URL=<kenect labs URL> \
+    -e KENECT_LABS_API_TOKEN=<kenect labs token> \
     -p 8080:8080 contacts-aggregator
 ```
 
