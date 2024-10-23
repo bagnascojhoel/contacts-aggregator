@@ -10,6 +10,7 @@ To build and run this application you will need:
 - Java: you need Java 23. You can use [SDKMAN!](https://sdkman.io/) to manage your Java versions.
 - Gradle: you don’t need to install Gradle manually; the ./gradlew (Unix) or gradlew.bat (Windows) 
   will do it for you.
+- Docker: you will need docker to use the docker compose file or run the application inside a container.
 
 ### Tests
 
