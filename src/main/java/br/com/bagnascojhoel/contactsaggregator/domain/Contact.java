@@ -1,17 +1,20 @@
 package br.com.bagnascojhoel.contactsaggregator.domain;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.util.Assert;
 
+import java.io.Serializable;
 import java.time.Instant;
 
 
 @Getter
 @Builder
 @ToString
-public class Contact {
+public class Contact implements Serializable {
     private final Integer id;
     private final String name;
     private final String email;

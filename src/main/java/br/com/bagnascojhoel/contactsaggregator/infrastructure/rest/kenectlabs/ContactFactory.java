@@ -19,17 +19,17 @@ public class ContactFactory {
         ContactsResponseDto body = response.getBody();
         if (body == null) {
             log.error("kenect labs API returned no body");
-            throw new PartnerException();
+            throw new KenectLabsException(response.getStatusCode());
         }
 
         if (headers.getFirst("current-page") == null) {
             log.error("kenect labs API did not return 'Current-Page' header");
-            throw new PartnerException();
+            throw new KenectLabsException(response.getStatusCode());
         }
 
         if (headers.getFirst("total-count") == null) {
             log.error("kenect labs API did not return 'Total-Count' header");
-            throw new PartnerException();
+            throw new KenectLabsException(response.getStatusCode());
         }
 
         return new Page<>(

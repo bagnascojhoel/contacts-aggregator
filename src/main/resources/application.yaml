@@ -1,6 +1,12 @@
 spring:
   application:
     name: contacts-aggregator
+  data:
+    redis:
+      database: 0
+      host: localhost
+      port: 16379
+      password: local
 
 springdoc:
   swagger-ui:

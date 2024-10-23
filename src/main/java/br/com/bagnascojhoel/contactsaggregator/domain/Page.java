@@ -16,12 +16,20 @@ public final class Page<T> {
     private final int page;
     private final int totalElements;
 
-    public static <T> Page<T> of(@NonNull Collection<T> content) {
+    public static <T> Page<T> of(@NonNull final Collection<T> content) {
         return new Page<T>(new ArrayList<T>(content), 0, content.size());
+    }
+
+    public static Page<Contact> empty() {
+        return new Page<>(new ArrayList<>(), 0, 0);
     }
 
     public int getPageSize() {
         return this.content.size();
+    }
+
+    public boolean isEmpty() {
+        return this.content.isEmpty();
     }
 
 }

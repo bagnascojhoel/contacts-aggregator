@@ -20,8 +20,11 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+    implementation 'io.github.resilience4j:resilience4j-timelimiter:2.2.0'
 
+    testImplementation 'io.github.resilience4j:resilience4j-timelimiter:2.2.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.rest-assured:rest-assured:5.3.2'
     testImplementation 'io.rest-assured:spring-mock-mvc:5.3.2'

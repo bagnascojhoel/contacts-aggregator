@@ -24,13 +24,13 @@ import static org.mockserver.model.HttpResponse.response;
 
 // ideally this would only load the beans required for this layer
 @SpringBootTest(classes = ContactsAggregatorApplication.class)
-class RestKenectLabsContactServiceTest {
+class KenectLabsRestClientTest {
 
     private final KenectLabsMockServer kenectLabsMockServer = new KenectLabsMockServer();
 
     private final ContactFactory contactFactory = new ContactFactory();
 
-    private final RestKenectLabsContactService restKenectLabsContactService = new RestKenectLabsContactService(
+    private final KenectLabsRestClient restKenectLabsContactService = new KenectLabsRestClient(
             kenectLabsMockServer.getHost(),
             "local",
             contactFactory);
@@ -73,7 +73,7 @@ class RestKenectLabsContactServiceTest {
                     .withBody(loadJson("rest/kenect-labs/contacts-response.json")));
 
             // act
-            Page<Contact> page = restKenectLabsContactService.getContactPage(0);
+            Page<Contact> page = restKenectLabsContactService.getContactsPage(0);
 
             // assert
             Assertions.assertThat(page.getContent())
@@ -81,6 +81,15 @@ class RestKenectLabsContactServiceTest {
                     .containsExactlyInAnyOrder(KENECT_LABS_DOUGLAS, KENECT_LABS_ROBERT);
         }
 
+        @Test
+        void shouldUseCachedResponse_whenServerRespondsWith5xx() {
+            // TODO: implement this scenarios
+        }
+
+        @Test
+        void whenRequestTimeouts() {
+            // TODO: implement this scenarios
+        }
     }
 
 }

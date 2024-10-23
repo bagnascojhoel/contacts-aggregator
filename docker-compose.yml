@@ -1,0 +1,14 @@
+services:
+  redis:
+    container_name: contacts-aggregator-redis
+    image: redis
+    ports:
+      - "16379:6379"
+    restart: always
+    command: redis-server --requirepass local
+    volumes:
+      - redis:/data
+
+volumes:
+  redis:
+    driver: local

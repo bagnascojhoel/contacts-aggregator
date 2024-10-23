@@ -2,14 +2,17 @@ package br.com.bagnascojhoel.contactsaggregator.application;
 
 import br.com.bagnascojhoel.contactsaggregator.domain.Contact;
 import br.com.bagnascojhoel.contactsaggregator.domain.ContactFixtures;
-import br.com.bagnascojhoel.contactsaggregator.domain.KenectLabsContactService;
+import br.com.bagnascojhoel.contactsaggregator.domain.ContactRepository;
+import br.com.bagnascojhoel.contactsaggregator.domain.KenectLabsContactsFindService;
 import br.com.bagnascojhoel.contactsaggregator.domain.Page;
+import io.github.resilience4j.timelimiter.TimeLimiter;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
@@ -21,18 +24,22 @@ class FetchContactsUseCaseTest {
     private FetchContactsUseCase fetchContactsUseCase;
 
     @Mock
-    private KenectLabsContactService kenectLabsContactService;
+    private KenectLabsContactsFindService kenectLabsContactsFindService;
+
+    @Mock
+    private ContactRepository contactRepository;
+
+    @Spy
+    private TimeLimiter timeLimiter = TimeLimiter.ofDefaults();
 
     @Test
-    void shouldFetchReturnAllKenectLabsContactsWhenThereIsASinglePage() {
+    void shouldReturnAllKenectLabsContactsWhenServiceReturnsThem() {
         // arrange
-        int totalElements = 2;
-        var firstPage = new Page<Contact>(
-                List.of(ContactFixtures.KENECT_LABS_DOUGLAS, ContactFixtures.KENECT_LABS_ROBERT),
-                0,
-                totalElements);
+        List<Contact> kenectContacts = List.of(
+                ContactFixtures.KENECT_LABS_DOUGLAS,
+                ContactFixtures.KENECT_LABS_ROBERT);
 
-        Mockito.when(kenectLabsContactService.getContactPage(0)).thenReturn(firstPage);
+        Mockito.when(kenectLabsContactsFindService.getContacts()).thenReturn(kenectContacts);
 
         // act
         List<Contact> contacts = fetchContactsUseCase.execute();
@@ -41,27 +48,38 @@ class FetchContactsUseCaseTest {
         Assertions.assertThat(contacts).containsExactlyInAnyOrder(
                 ContactFixtures.KENECT_LABS_DOUGLAS,
                 ContactFixtures.KENECT_LABS_ROBERT);
-        Mockito.verify(kenectLabsContactService).getContactPage(0);
+        Mockito.verify(kenectLabsContactsFindService).getContacts();
     }
 
     @Test
-    void shouldFetchReturnAllKenectLabsContactsWhenThereAreMultiplePages() {
+    void shouldSaveAllKenectLabsContactsWhenServiceReturnsThemSuccessfully() {
         // arrange
-        int totalElements = 500;
-        var firstPage = new Page<Contact>(List.of(Mockito.mock(Contact.class)), 0, totalElements);
+        List<Contact> kenectContacts = List.of(
+                ContactFixtures.KENECT_LABS_DOUGLAS,
+                ContactFixtures.KENECT_LABS_ROBERT);
 
-        Mockito.when(kenectLabsContactService.getContactPage(0)).thenReturn(firstPage);
-        Mockito.when(kenectLabsContactService.getContactPage(Mockito.anyInt()))
-                .thenAnswer((invocation) -> new Page<>(List.of(
-                        Mockito.mock(Contact.class)),
-                        invocation.getArgument(0),
-                        totalElements));
+        Mockito.when(kenectLabsContactsFindService.getContacts()).thenReturn(kenectContacts);
 
         // act
-        List<Contact> contacts = fetchContactsUseCase.execute();
+        fetchContactsUseCase.execute();
 
         // assert
-        Assertions.assertThat(contacts).hasSize(totalElements);
+        Mockito.verify(contactRepository).saveAll(kenectContacts);
+    }
+
+    @Test
+    void shouldReturnStoredKenectLabsContactsWhenServiceFails() {
+        // TODO: implement this scenario
+    }
+
+    @Test
+    void shouldThrowWhenServiceFailsAndThereAreNoFallbackContactsStored() {
+        // TODO: implement this scenario
+    }
+
+    @Test
+    void shouldDropWaitingForTheServiceResponseWhenWaitingTimeHasRanOut() {
+        // TODO: implement this scenario
     }
 
 }
