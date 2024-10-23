@@ -23,7 +23,13 @@ import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
 
 // ideally this would only load the beans required for this layer
-@SpringBootTest(classes = ContactsAggregatorApplication.class)
+@SpringBootTest(
+        classes = ContactsAggregatorApplication.class,
+        properties = {
+                "rest-integrations.kenect-labs-api.base-url=http://localhost:1080",
+                "rest-integrations.kenect-labs-api.token=local"
+        }
+)
 class KenectLabsRestClientTest {
 
     private final KenectLabsMockServer kenectLabsMockServer = new KenectLabsMockServer();
