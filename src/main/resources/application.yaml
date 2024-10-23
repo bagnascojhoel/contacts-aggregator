@@ -16,6 +16,5 @@ springdoc:
 
 rest-integrations:
   kenect-labs-api:
-    base-url: https://k-messages-api.herokuapp.com
-    token: J7ybt6jv6pdJ4gyQP9gNonsY
-    # JODO: Do not commit this secrets
+    base-url: ${KENECT_LABS_API_BASE_URL}
+    token: ${KENECT_LABS_API_TOKEN}
