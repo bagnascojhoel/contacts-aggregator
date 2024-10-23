@@ -29,7 +29,7 @@ docker compose up
 
 Then, for development purposes, you can use:
 ```shell
-./gradlew bootRun
+KENECT_LABS_API_BASE_URL=<kenect labs URL> KENECT_LABS_API_TOKEN=<kenect labs token> ./gradlew bootRun
 ```
 
 Or, for a more robust local test, you can use the container:
@@ -87,4 +87,6 @@ And I augmented the clarity of changes with [conventional commits](https://www.c
   - ~~Leverage this cache as fallback when the API fails~~.
 - ~~Contenarize the application.~~
 - Add spring boot actuator to monitor the application.
-- Setup a connection-pool the have some warm-up threads.`
+- Setup a connection-pool the have some warm-up threads.
+- Add global exception handling with Controller Advice.
+- Add internationalization with message properties.
