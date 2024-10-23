@@ -24,22 +24,25 @@ First of the application needs a Redis instance to store fallback data. You can 
 compose file to spin-up a local instance:
 
 ```shell
-# when at contacts-aggregator root
-docker compose up .
+docker compose up
 ```
 
 Then, for development purposes, you can use:
 ```shell
-./graldew bootRun
+./gradlew bootRun
 ```
 
 Or, for a more robust local test, you can use the container:
 
 ```shell
 ./gradlew bootJar
+```
 
+```shell
 docker image build . -t contacts-aggregator
+```
 
+```shell
 docker container run 
     --network="host" 
     -e KENECT_LABS_API_BASE_URL=<kenect labs URL>
