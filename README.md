@@ -1,4 +1,4 @@
-`# Contacts Aggregator
+# Contacts Aggregator
 
 This application aggregates contact information from other external APIs.
 
